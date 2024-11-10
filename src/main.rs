@@ -1,15 +1,17 @@
 #![allow(unused)]
 
+use axum::extract::{Path, Query};
 use axum::response::{Html, IntoResponse};
 use axum::routing::get;
 use axum::{Router, ServiceExt};
-use std::net::SocketAddr;
-use axum::extract::Query;
 use serde::Deserialize;
+use std::net::SocketAddr;
 
 #[tokio::main]
 async fn main() {
-    let routes_hello = Router::new().route("/hello", get(handler_hello));
+    let routes_hello = Router::new()
+        .route("/hello", get(handler_hello))
+        .route("/hello2/:name", get(handler_hello2));
 
     // region:    --- Start Server
     let addr = SocketAddr::from(([127, 0, 0, 1], 8080));
@@ -26,9 +28,10 @@ async fn main() {
 
 #[derive(Debug, Deserialize)]
 struct HelloParams {
-    name: Option<String>
+    name: Option<String>,
 }
 
+// e.g., `/hello?name=Jan`
 async fn handler_hello(Query(params): Query<HelloParams>) -> impl IntoResponse {
     println!("->> {:<12} - handler_hello - {params:?}", "HANDLER");
 
@@ -37,29 +40,10 @@ async fn handler_hello(Query(params): Query<HelloParams>) -> impl IntoResponse {
     Html(format!("Hello <strong>{name}</strong>"))
 }
 
+// e.g., `/hello2/Mike
+async fn handler_hello2(Path(name): Path<String>) -> impl IntoResponse {
+    println!("->> {:<12} - handler_hello2 - {name:?}", "HANDLER");
+
+    Html(format!("Hello2 <strong>{name}</strong>"))
+}
 // endregion:   --- Handler_hello
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
