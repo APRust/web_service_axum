@@ -5,8 +5,14 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1", features = ["full"]}
+
+# Axum
 axum = "0.6"
+tower-http = { version = "0.4", features = ["fs"]}
+
+# Serde / json
 serde = { version = "1.0.214", features = ["derive"] }
+serde_json = "1"
 
 [dev-dependencies]
 anyhow = "1"
