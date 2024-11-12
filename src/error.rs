@@ -3,13 +3,14 @@ use axum::response::{IntoResponse, Response};
 use std::fmt::Formatter;
 
 pub type Result<T> = core::result::Result<T, Error>;
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Error {
     LoginFail,
 
     // -- Auth errors.
     AuthFailNoAuthTokenCookie,
     AuthFailTokenWrongFormat,
+    AuthFailCtxNotInRequestExt,
 
     // -- Model errors.
     TicketDeleteFailIdNotFound { id: u64 },
