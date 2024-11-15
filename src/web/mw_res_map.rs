@@ -5,6 +5,7 @@ use axum::http::{Method, Uri};
 use axum::response::{IntoResponse, Response};
 use axum::Json;
 use serde_json::json;
+use tracing::debug;
 use uuid::Uuid;
 
 pub async fn mw_response_map(
@@ -13,7 +14,7 @@ pub async fn mw_response_map(
     req_method: Method,
     res: Response,
 ) -> Response {
-    println!("->> {:<12} - main_response_mapper", "RES_MAPPER");
+    debug!("{:<12} - main_response_mapper", "RES_MAPPER");
     let uuid = Uuid::new_v4();
 
     // -- Get the eventual response error.
@@ -31,7 +32,7 @@ pub async fn mw_response_map(
                 }
             });
 
-            println!("->> CLIENT_ERROR_BODY: \n{client_error_body}");
+            debug!("CLIENT_ERROR_BODY: \n{client_error_body}");
 
             // Build the new response from the client_error_body
             (*status_code, Json(client_error_body)).into_response()
@@ -42,7 +43,7 @@ pub async fn mw_response_map(
     // TODO: Need to hanger if log_request fail (but should nor fail request)
     let _ = log_request(uuid, req_method, uri, ctx, web_error, client_error).await;
 
-    println!("\n");
+    debug!("\n");
 
     error_response.unwrap_or(res)
 }

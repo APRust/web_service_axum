@@ -3,6 +3,7 @@ use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use serde::Serialize;
 use std::fmt::Formatter;
+use tracing::debug;
 
 pub type Result<T> = core::result::Result<T, Error>;
 
@@ -19,7 +20,7 @@ pub enum Error {
 // region:    --- Axum IntoResponse
 impl IntoResponse for Error {
     fn into_response(self) -> Response {
-        println!("->> {:<12} - into_response", "HANDLER");
+        debug!("{:<12} - into_response", "HANDLER");
 
         // Create a placeholder Axum response
         let mut response = StatusCode::INTERNAL_SERVER_ERROR.into_response();
