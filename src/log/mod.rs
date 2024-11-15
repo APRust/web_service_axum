@@ -1,5 +1,6 @@
 use crate::ctx::Ctx;
-use crate::error::{ClientError, Error, Result};
+use crate::web::{self, ClientError};
+use crate::Result;
 use axum::http::{Method, Uri};
 use serde::Serialize;
 use serde_json::{json, Value};
@@ -12,13 +13,15 @@ pub async fn log_request(
     req_method: Method,
     uri: Uri,
     ctx: Option<Ctx>,
-    service_error: Option<&Error>,
+    service_error: Option<&web::Error>,
     client_error: Option<ClientError>,
 ) -> Result<()> {
     let timestamp = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
         .as_millis();
+    
+    println!();
 
     let error_type = service_error.map(|se| se.as_ref().to_string());
     let error_data = serde_json::to_value(service_error)
