@@ -1,0 +1,9 @@
+# Cargo config file
+# See: https://doc.rust-lang.org/cargo/reference/config.toml
+
+# Environments variables set for all `cargo ...` commands.
+[env]
+
+# Scope down tracing, to filter out external lib tracing.
+RUST_LOG="web_service_axum=debug"
+
