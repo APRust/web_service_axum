@@ -13,8 +13,8 @@ pub enum Error {
 
 // region:    --- Froms
 impl From<model::Error> for Error {
-    fn from(value: model::Error) -> Self {
-        Self::Model(value)
+    fn from(val: model::Error) -> Self {
+        Self::Model(val)
     }
 }
 // endregion: --- Froms
