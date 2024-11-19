@@ -23,6 +23,7 @@ tower-cookies = "0.9"
 
 # Data
 sqlx = { version = "0.6", features = ["runtime-tokio-rustls", "postgres", "uuid", "time" ]}
+sqlb = "0.3" # Optional
 
 # Tracing
 tracing = "0.1"
