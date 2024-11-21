@@ -20,6 +20,13 @@ RUST_LOG="web_service_axum=debug"
 
 SERVICE_DB_URL="postgres://app_user:dev_only_pwd@localhost/app_db"
 
+SERVICE_PWD_KEY = "vlgx5ZG9cycxs9WESjU8pWDxwcDtPGvv40NITmvXCYaYFVnkSTkj0JVMeBebZIq4QO2PqV3ybZwCBCA1NalCew"
+
+SERVICE_TOKEN_KEY = "JpTeRpndMMohQk5-nBUBhmWTs53MnaeRk7TAAqy2sFEbpPV-0Mu6l9x7sZ2GSNwPt1Mst1rw9z0EsM3rHahpnw"
+SERVICE_TOKEN_DURATION_SEC = "1800" # 30 minutes
+
+# ..._KEY = base_64(base_64u(...))
+
 ## -- ConfigMap
 
 # This will be relative to Cargo.toml
