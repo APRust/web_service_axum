@@ -20,6 +20,7 @@ pub use crate::config::config;
 use crate::model::ModelManager;
 use crate::web::mw_auth::{mw_ctx_require, mw_ctx_resolver};
 use crate::web::mw_res_map::mw_response_map;
+use crate::web::rpc;
 use crate::web::{routes_login, routes_static};
 use axum::response::Html;
 use axum::routing::get;
@@ -45,17 +46,11 @@ async fn main() -> Result<()> {
     let mm = ModelManager::new().await?;
 
     // -- Define Routes
-    // let routes_rps = rpc::routes(mm.clone())
-    //     .route_layer(middleware::from_fn(mw_ctx_require));
-
-    let routes_hello = Router::new()
-        .route("/hello", get(|| async { Html("Hello, world!") }))
-        .route_layer(middleware::from_fn(mw_ctx_require));
+    let routes_rps = rpc::routes(mm.clone()).route_layer(middleware::from_fn(mw_ctx_require));
 
     let routes_all = Router::new()
         .merge(routes_login::routes(mm.clone()))
-        .merge(routes_hello)
-        // .nest("/api", routes_rpc)
+        .nest("/api", routes_rps)
         .layer(middleware::map_response(mw_response_map))
         .layer(middleware::from_fn_with_state(mm.clone(), mw_ctx_resolver))
         .layer(CookieManagerLayer::new())

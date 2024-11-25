@@ -4,6 +4,7 @@ pub mod mw_auth;
 pub mod mw_res_map;
 pub mod routes_login;
 pub mod routes_static;
+pub mod rpc;
 
 pub use self::error::{ClientError, Error, Result};
 use crate::crypt::token::generate_web_token;
