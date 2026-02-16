@@ -13,6 +13,7 @@ mod dev_db;
 
 /// Initialize environment for local development
 /// (for early development, will be called from main()).
+/// kdjfkdjfjdf
 pub async fn init_dev() {
     static INIT: OnceCell<()> = OnceCell::const_new();
 
